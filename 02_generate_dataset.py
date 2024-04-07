@@ -183,8 +183,8 @@ def send_orders(orders_queue, instances, seed, exploration_policy, query_expert_
 
     episode = 0
     while True:
-        instance = rng.choice(instances)
-        seed = rng.randint(2**32)
+        instance = rng.choice(instances)#生成instance
+        seed = rng.randint(2**31)
         orders_queue.put([episode, instance, seed, exploration_policy, query_expert_prob, time_limit, out_dir])
         episode += 1
 
@@ -236,7 +236,7 @@ def collect_samples(instances, out_dir, rng, n_samples, n_jobs,
     # start dispatcher
     dispatcher = mp.Process(
             target=send_orders,
-            args=(orders_queue, instances, rng.randint(2**32), exploration_policy, query_expert_prob, time_limit, tmp_samples_dir),
+            args=(orders_queue, instances, rng.randint(2**31), exploration_policy, query_expert_prob, time_limit, tmp_samples_dir),
             daemon=True)
     dispatcher.start()
 
@@ -355,7 +355,7 @@ if __name__ == '__main__':
     print(f"{len(instances_test)} test instances for {test_size} samples")
 
     # create output directory, throws an error if it already exists
-    os.makedirs(out_dir)
+    os.makedirs(out_dir,exist_ok=True)
 
     rng = np.random.RandomState(args.seed)
     collect_samples(instances_train, out_dir + '/train', rng, train_size,

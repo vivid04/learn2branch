@@ -295,7 +295,7 @@ index 0000000000..e188291991
 +         /* display node information line */
 +         if( SCIPgetDepth(scip) == 0 && nsbcalls % 100 == 0 )
 +         {
-+            SCIP_CALL( SCIPprintDisplayLine(scip, NULL, SCIP_VERBLEVEL_HIGH, TRUE) );
++            SCIP_CALL( SCIPprintDisplayLine(scip, NULL, SCIP_VERBLEVEL_, TRUE) );
 +         }
 +         /* update variable pseudo cost values */
 +         if( !downinf && downvalid )
